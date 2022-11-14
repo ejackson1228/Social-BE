@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public')); //not needed, as there is no 'public' directory for use
+app.use(express.static('public')); //not yet needed, as there is no 'public' directory for use yet.
 
 app.use(require('./routes'));
 
