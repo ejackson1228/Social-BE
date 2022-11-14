@@ -48,7 +48,7 @@ const userController = {
     //create new User
     createUser({ body }, res) {
         User.create(body)
-        .then(dbUserData => res.json(dbUserData))
+        .then((dbUserData) => res.json(dbUserData))
         .catch(err => res.status(400).json(err));
     },
 
@@ -78,7 +78,7 @@ const userController = {
             }
 
             // bonus: delete all associated thoughts when a user is deleted
-            return Thought.deleteMany( { username: dbUserData.username });
+            return Thought.deleteMany( { userId: dbUserData._id });
         })
         .then(res.json({ message: 'User and associated Thoughts deleted!'}))
         .catch(err => res.status(400).json(err));
@@ -107,14 +107,15 @@ const userController = {
     deleteFriend({ params }, res) {
         User.findOneAndUpdate(
             { _id: params.userId },
-            { $pull: { friends: params.friendId } } // pull from friends array 
+            { $pull: { friends: params.friendId } },// pull from friends array
+            { new: true }  
         )
         .then(dbUserData => {
             if (!dbUserData) {
-                res.status(404).json({ message: 'No User found with tht ID!'});
+                res.status(404).json({ message: 'No User found with that ID!'});
                 return;
             }
-            res.json(dbUserData)
+            res.json(dbUserData);
         })
         .catch(err => res.json(err))
     }

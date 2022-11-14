@@ -11,8 +11,8 @@ const {
 
 router
     .route('/')
+    .post(createUser)
     .get(getAllUser)
-    .post(createUser);
 
 router
     .route('/:id')
